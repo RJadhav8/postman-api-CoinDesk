@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "e5beb628-5119-4cee-be37-c63bfe6b6a48",
+		"name": "CoinDesk API Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41181645",
+		"_collection_link": "https://universal-sunset-504042.postman.co/workspace/RashmiJadhav-Workspace~fd5c4939-1794-4c63-8c7c-c383a5810d0d/collection/41181645-e5beb628-5119-4cee-be37-c63bfe6b6a48?action=share&source=collection_link&creator=41181645"
+	},
+	"item": [
+		{
+			"name": "Get CurrentPrice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"//to verify status code 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//to verify response contains 3 BPIs\r",
+							"pm.test(\"Response contains 3 BPIs\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(Object.keys(responseBody.bpi).length).to.equal(3);\r",
+							"});\r",
+							"\r",
+							"//to verify response contains USD, EUR and GBP\r",
+							"pm.test(\"Response contains USD, EUR and GBP\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.bpi).to.have.property('USD');\r",
+							"    pm.expect(responseBody.bpi).to.have.property('EUR');\r",
+							"    pm.expect(responseBody.bpi).to.have.property('GBP');\r",
+							"});\r",
+							"\r",
+							"//to verify GBP ‘description’ equals ‘British Pound Sterling’.\r",
+							"pm.test(\"GBP description is British Pound Sterling\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.bpi.GBP.description).to.equal(\"British Pound Sterling\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiURL}}/v1/bpi/currentprice.json",
+					"host": [
+						"{{apiURL}}"
+					],
+					"path": [
+						"v1",
+						"bpi",
+						"currentprice.json"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
